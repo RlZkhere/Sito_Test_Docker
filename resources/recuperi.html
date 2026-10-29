@@ -30,16 +30,29 @@ background-color: lightblue;
 margin: 0;
 padding: 0;
 }
+.testo-pulsante-home {
+text-decoration: none;
+font-family: verdana;
+font-color: black;
+}
 </style>
 </head>
 <body>
 <button type="submit" value="Submit" class='pulsante-home'>
-<a style="text-decoration:none;font-family:verdana;font-color:black" href='../../index.html'>Torna alla Home</a>
+<a class='testo-pulsante-home' href='../../index.html'>Torna alla Home</a>
 </button>
 <div class='bottone-nascosto'>
 <button onclick='window.open("../storage/foto-bottone.jpg")'></button>
 </div>
-<h2>Lancia nuovo script</h2>
+<h2>Esegui script senza listasku</h2>
+<form id="lancia_script_no_sku" action="/resources/esegui_script.php" method="POST">
+<label for="nome_script_no_sku">Seleziona Script</label>
+<select id="nome_script_no_sku" name="nome_script_no_sku">
+<option value="mt">MT HELMETS</option>
+</select>
+<input type="submit" value="Conferma">
+</form>
+<h2>Esegui script con listasku</h2>
 <form id="lancia_script" action="/resources/esegui_script.php" method="POST" onsubmit="return apri_finestra_sku(event);">
 <label for="nome_script">Seleziona Script</label>
 <select id="nome_script" name="nome_script">
@@ -61,6 +74,7 @@ padding: 0;
 <option value="arrow">ARROW</option>
 <option value="brembo">BREMBO</option>
 <option value="gpr">GPR</option>
+<option value="mt">MT HELMETS</option>
 <option value="polini">POLINI</option>
 <option value="polisport">POLISPORT</option>
 <option value="puig">PUIG</option>
