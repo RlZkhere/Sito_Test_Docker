@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Controlli eBay / Magento</title>
+<style>
+.pagina_home {
+position: absolute;
+top: 10px;
+left: 10px;
+background-color: #8AACE6;
+}
+* {
+box-sizing: border-box;
+}
+body {
+margin: 0;
+font-family: Arial, Helvetica, sans-serif;
+background: #9DBCEB;
+color: #1f2937;
+}
+.nascosto {
+display: none;
+}
+.page-wrapper {
+min-height: 100vh;
+display: flex;
+justify-content: center;
+align-items: flex-start;
+padding: 60px 20px;
+}
+.card {
+width: 100%;
+max-width: 620px;
+background: #ffffff;
+border-radius: 14px;
+box-shadow: 0 10px 35px rgba(0, 0, 0, 0.08);
+overflow: hidden;
+}
+.card-header {
+padding: 28px 32px;
+border-bottom: 1px solid #e5e7eb;
+}
+.card-header h2 {
+margin: 0;
+font-size: 25px;
+font-weight: 700;
+color: #111827;
+}
+.card-header p {
+margin: 8px 0 0;
+font-size: 14px;
+line-height: 1.5;
+color: #6b7280;
+}
+.card-body {
+padding: 32px;
+}
+.form-group {
+margin-bottom: 24px;
+}
+.form-group label {
+display: block;
+margin-bottom: 8px;
+font-size: 14px;
+font-weight: 600;
+color: #374151;
+}
+select,
+textarea {
+width: 100%;
+border: 1px solid #d1d5db;
+border-radius: 8px;
+background: #ffffff;
+font-family: inherit;
+font-size: 15px;
+color: #111827;
+transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+select {
+height: 46px;
+padding: 0 12px;
+cursor: pointer;
+}
+textarea {
+min-height: 220px;
+padding: 12px;
+resize: vertical;
+line-height: 1.5;
+}
+select:focus,
+textarea:focus {
+outline: none;
+border-color: #2563eb;
+box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+.submit-button,
+.modal-confirm,
+.modal-cancel {
+border: 0;
+border-radius: 8px;
+padding: 12px 20px;
+font-size: 14px;
+font-weight: 600;
+cursor: pointer;
+transition: all 0.2s ease;
+}
+.submit-button {
+width: 100%;
+background: #2563eb;
+color: #ffffff;
+}
+.submit-button:hover {
+background: #1d4ed8;
+transform: translateY(-1px);
+}
+.overlay {
+display: none;
+position: fixed;
+inset: 0;
+width: 100%;
+height: 100%;
+background-color: rgba(17, 24, 39, 0.55);
+justify-content: center;
+align-items: center;
+padding: 20px;
+z-index: 9999;
+}
+.finestra-modal {
+width: 100%;
+max-width: 500px;
+background-color: #ffffff;
+border-radius: 14px;
+box-shadow: 0 25px 60px rgba(0, 0, 0, 0.22);
+overflow: hidden;
+}
+.modal-header {
+padding: 22px 24px 18px;
+border-bottom: 1px solid #e5e7eb;
+}
+.modal-header h3 {
+margin: 0;
+font-size: 19px;
+color: #111827;
+}
+.modal-header p {
+margin: 7px 0 0;
+font-size: 13px;
+color: #6b7280;
+}
+.modal-body {
+padding: 24px;
+}
+.modal-actions {
+display: flex;
+justify-content: flex-end;
+gap: 10px;
+margin-top: 20px;
+}
+.modal-confirm {
+background: #2563eb;
+color: white;
+}
+.modal-confirm:hover {
+background: #1d4ed8;
+}
+.modal-cancel {
+background: #f3f4f6;
+color: #374151;
+}
+.modal-cancel:hover {
+background: #e5e7eb;
+}
+.helper-text {
+margin-top: 7px;
+font-size: 12px;
+color: #9ca3af;
+}
+@media (max-width: 600px) {
+.page-wrapper {
+padding: 25px 15px;
+}
+.card-header,
+.card-body {
+padding: 22px;
+}
+.modal-actions {
+flex-direction: column;
+}
+.modal-confirm,
+.modal-cancel {
+width: 100%;
+}
+}
+</style>
+</head>
+<body>
+<div class="page-wrapper">
+<button class="pagina_home">
+<a style="text-decoration: none" href="/">Torna Alla Home</a>
+</button>
+<div class="card">
+<div class="card-header">
+<h2>Controlli Generali Marketplace/Prodotti</h2>
+<p>Seleziona il tipo di verifica che vuoi eseguire.</p>
+</div>
+<div class="card-body">
+<form id="controlli_piattaforme" action="CHECK-SQL/controlli_piattaforme.php" method="POST" onsubmit="return apri_finestra_argomenti(event);">
+<div class="form-group">
+<label for="piattaforma">Tipo di controllo</label>
+<select id="piattaforma" name="piattaforma" onchange="aggiornaTipiControllo();">
+<option value="listini">Controllo Prezzi</option>
+<option value="vendite">Besteller/Vendite per SKU</option>
+<option value="no_vendite">No vendite ultimi X giorni</option>
+<option value="magento">Pubblica non online su Magento</option>
+<option value="ebay">Pubblica non online su eBay</option>
+</select>
+</div>
+<div class="form-group">
+<label for="tipo_controllo">Tipo di ricerca</label>
+<select id="tipo_controllo" name="tipo_controllo">
+<option value="generale" class="standard">Generico</option>
+<option value="brand" class="standard">Per Brand</option>
+<option value="sku" class="standard">Per SKU</option>
+<option value="ricarico" class="listini">Controllo ricarico</option>
+<option value="outlet" class="listini">Controllo outlet</option>
+</select>
+</div>
+<div class="form-group" id="numero_sku" style="display:none">
+<p>Inserisci numero di sku da tenere</p>
+<input name="numero_sku" type="number" value="40">
+</div>
+<input type="hidden" id="lista_dati_nascosto" name="lista_dati">
+<input class="submit-button" type="submit" value="Avvia controllo">
+</form>
+</div>
+</div>
+</div>
+<div id="modal_sku" class="overlay">
+<div class="finestra-modal">
+<div class="modal-header">
+<h3>Inserisci Brand / SKU</h3>
+<p>Inserisci uno o più valori da utilizzare per il controlo</p>
+</div>
+<div class="modal-body">
+<textarea id="valori" rows="10" cols="40" placeholder="Inserisci un valore per riga" oninput="this.value = this.value.toUpperCase();"></textarea> <!-- Questo e fondamentale per tenere i valori maiuscoli -->
+<div class="helper-text">Per inserire più valori, inseriscine uno per ogni riga.</div>
+<div class="modal-actions">
+<button class="modal-cancel" type="button" onclick="chiudi_finestra();">Annulla</button>
+<button class="modal-confirm" type="button" onclick="invia_dati();">Conferma e avvia</button>
+</div>
+</div>
+</div>
+</div>
+<script>
+function aggiornaTipiControllo() {
+const piattaforma = document.getElementById('piattaforma').value;
+document.getElementById('numero_sku').style.display = piattaforma === 'vendite' ? 'block' : 'none';
+const tipoControllo = document.getElementById('tipo_controllo');
+const opzioni = tipoControllo.querySelectorAll('option');
+opzioni.forEach(option => {
+option.hidden = false;
+option.disabled = false;
+});
+if (piattaforma === 'no_vendite') {
+opzioni.forEach(option => {
+option.hidden = true;
+option.disabled = true;
+});
+const brand = tipoControllo.querySelector('option[value="brand"]');
+brand.hidden = false;
+brand.disabled = false;
+tipoControllo.value = 'brand';
+} 
+else if (piattaforma === 'listini') {
+opzioni.forEach(option => {
+if (option.classList.contains('standard')) {
+option.hidden = true;
+option.disabled = true;
+}
+});
+tipoControllo.value = 'ricarico';
+} 
+else if (piattaforma === 'vendite') {
+const generale = tipoControllo.querySelector('option[value="generale"]');
+generale.hidden = true;
+generale.disabled = true;
+opzioni.forEach(option => {
+if (option.classList.contains('listini')) {
+option.hidden = true;
+option.disabled = true;
+}
+});
+tipoControllo.value = 'brand';
+} 
+else {
+opzioni.forEach(option => {
+if (option.classList.contains('listini')) {
+option.hidden = true;
+option.disabled = true;
+}
+});
+tipoControllo.value = 'generale';
+}
+}
+function apri_finestra_argomenti(event) {
+const tipo = document.getElementById('tipo_controllo').value;
+const piattaforma = document.getElementById('piattaforma').value;
+if (piattaforma !== 'no_vendite' && tipo !== 'brand' && tipo !== 'sku') {
+return true;
+}
+event.preventDefault();
+document.getElementById('modal_sku').style.display = 'flex';
+return false;
+}
+function invia_dati() {
+const testo = document.getElementById('valori').value;
+document.getElementById('lista_dati_nascosto').value = testo;
+document.getElementById('modal_sku').style.display = 'none';
+document.getElementById('controlli_piattaforme').submit();
+}
+function chiudi_finestra() {
+document.getElementById('modal_sku').style.display = 'none';
+}
+document.addEventListener('DOMContentLoaded', aggiornaTipiControllo);
+</script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Download Foto</title>
+<style>
+* {
+box-sizing: border-box;
+margin: 0;
+padding: 0;
+font-family: Arial, sans-serif;
+}
+body {
+padding: 20px;
+}
+.action-bar {
+display: flex;
+gap: 10px;
+}
+.btn-link {
+display: inline-block;
+padding: 8px 16px;
+font-size: 14px;
+color: #111;
+text-decoration: none;
+border: 1px solid #111;
+border-radius: 4px;
+transition: all 0.2s ease;
+}
+.btn-link:hover {
+background-color: #111;
+color: #fff;
+}
+.btn-link.highlight {
+background-color: #111;
+color: #fff;
+}
+.btn-link.highlight:hover {
+background-color: #333;
+}
+</style>
+</head>
+<body>
+<div class="action-bar">
+<a href="/" class="btn-link">Home</a>
+<a href="../storage/MODIFICA-FOTO/foto_nuove.zip" class="btn-link highlight" download>Scarica le foto</a>
+</div>
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BrixiaMoto - Strumenti</title>
+<style>
+* {
+box-sizing: border-box;
+}
+body {
+margin: 0;
+font-family: "Segoe UI", Arial, sans-serif;
+background: #f5f6f8;
+color: #26364a;
+}
+.navbar {
+width: 100%;
+height: 68px;
+display: flex;
+align-items: center;
+padding: 0 20px;
+background: #f3f3f3;
+border-bottom: 1px solid #d9d9d9;
+box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+.menu {
+height: 100%;
+display: flex;
+align-items: stretch;
+margin: 0;
+padding: 0;
+list-style: none;
+}
+.menu li {
+display: flex;
+align-items: stretch;
+}
+.menu li a {
+display: flex;
+align-items: center;
+padding: 0 22px;
+color: #25364a;
+text-decoration: none;
+font-size: 17px;
+font-weight: 400;
+white-space: nowrap;
+transition: background-color 0.18s ease, color 0.18s ease;
+}
+.menu li a:hover {
+background: #e9edf1;
+color: #397fae;
+}
+.menu li.active a {
+background: #e9edf1;
+}
+.content {
+max-width: 1400px;
+margin: 0 auto;
+padding: 50px 35px;
+}
+.content h1 {
+margin: 0 0 12px;
+font-size: 30px;
+font-weight: 500;
+color: #25364a;
+}
+.content p {
+margin: 0;
+color: #687585;
+font-size: 16px;
+}
+@media (max-width: 800px) {
+.navbar {
+padding: 0 10px;
+}
+.menu li a {
+padding: 0 14px;
+font-size: 15px;
+}
+}
+</style>
+</head>
+<body>
+<nav class="navbar">
+<ul class="menu">
+<li class="active"><a href="resources/recuperi.html">Script Recupero dati</a></li>
+<li><a href="resources/analisi_ecommerce.html">Analisi Magento/Ebay</a></li>
+<li><a href="resources/modifica_foto.html">Modifica foto</a></li>
+</ul>
+</nav>
+<main class="content">
+<h1>Strumenti Pannello</h1>
+<p>Seleziona una funzione dal menu superiore.</p>
+</main>
+</body>
+</html>

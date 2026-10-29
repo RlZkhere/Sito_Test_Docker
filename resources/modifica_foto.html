@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gestione foto</title>
+<style>
+.pagina_home {
+position: absolute;
+left: 10px;
+top: 0px;
+width: auto;
+background-color: #8AACE6;
+cursor: pointer;
+font-size: 15px;
+}
+* { box-sizing: border-box; }
+body {
+font-family: Arial, sans-serif;
+background: #9DBCEB;
+margin: 0;
+padding: 40px 15px;
+color: #253047;
+}
+.finestra-modal {
+background: #fff;
+padding: 32px;
+border-radius: 14px;
+max-width: 440px;
+margin: auto;
+box-shadow: 0 10px 35px rgba(0,0,0,.08);
+}
+h2 {
+margin: 0 0 8px;
+font-size: 23px;
+}
+.descrizione {
+color: #778195;
+font-size: 14px;
+margin-bottom: 28px;
+line-height: 1.5;
+}
+label {
+display: block;
+font-weight: 600;
+font-size: 14px;
+margin-bottom: 10px;
+}
+select {
+width: 100%;
+padding: 14px;
+border: 1px solid #dce1e9;
+border-radius: 8px;
+background: white;
+color: #253047;
+font-size: 14px;
+margin-bottom: 22px;
+cursor: pointer;
+}
+select:focus {
+outline: none;
+border-color: #376cf5;
+}
+.upload-area {
+border: 2px dashed #cbd5e5;
+border-radius: 10px;
+background: #f8faff;
+text-align: center;
+padding: 30px 15px;
+cursor: pointer;
+transition: .2s;
+}
+.upload-area:hover {
+border-color: #376cf5;
+background: #f0f5ff;
+}
+.upload-icon {
+font-size: 32px;
+margin-bottom: 12px;
+}
+.upload-title {
+font-size: 15px;
+font-weight: 600;
+margin-bottom: 6px;
+}
+.upload-subtitle {
+font-size: 12px;
+color: #8993a5;
+}
+button {
+width: 100%;
+margin-top: 22px;
+padding: 15px;
+background: #376cf5;
+border: none;
+border-radius: 8px;
+color: white;
+font-weight: 600;
+font-size: 15px;
+cursor: pointer;
+}
+button:hover {
+background: #2457d5;
+}
+button:disabled {
+background: #aab7d5;
+cursor: wait;
+}
+#file-count {
+margin-top: 12px;
+font-size: 13px;
+color: #376cf5;
+text-align: center;
+}
+</style>
+</head>
+<body>
+<button class="pagina_home">
+<a style="text-decoration: none" href="/">Torna Alla Home</a>
+</button>
+<div class="finestra-modal">
+<h2>Gestione immagini</h2>
+<p class="descrizione">
+Carica le immagini e seleziona
+l'operazione da eseguire.
+</p>
+<form id="modifica_foto"
+action="/resources/recupera_foto.php"
+method="POST"
+enctype="multipart/form-data">
+<label for="tipo_modifica">
+Tipo di elaborazione
+</label>
+<select id="tipo_modifica" name="tipo_modifica">
+<option value="ridimensiona">
+Ridimensiona immagini
+</option>
+<option value="taglio_contenuto">
+Ritaglia al contenuto
+</option>
+<option value="duplica_foto">
+Duplica e specchia immagini
+</option>
+</select>
+<input type="file"
+id="file_foto"
+name="file_foto[]"
+accept="image/*"
+multiple
+style="display:none"
+onchange="invia_file()">
+<div class="upload-area"
+onclick="apri_esplora_risorse()">
+<div class="upload-icon">📁</div>
+<div class="upload-title">
+Seleziona le immagini
+</div>
+<div class="upload-subtitle">
+Puoi selezionare più file contemporaneamente
+</div>
+</div>
+<div id="file-count"></div>
+<button type="button"
+id="btn-conferma"
+onclick="avvia_elaborazione()">
+Seleziona e avvia elaborazione
+</button>
+</form>
+</div>
+<script>
+function apri_esplora_risorse() {
+document.getElementById('file_foto').click();
+}
+function invia_file() {
+const files = document.getElementById('file_foto').files;
+const count = document.getElementById('file-count');
+count.textContent = files.length > 0
+? files.length + ' immagini selezionate'
+: '';
+}
+function avvia_elaborazione() {
+const files = document.getElementById('file_foto').files;
+if (files.length === 0) {
+alert('Seleziona almeno una immagine.');
+return;
+}
+const btn = document.getElementById('btn-conferma');
+btn.disabled = true;
+btn.textContent = 'Elaborazione in corso...';
+document.getElementById('modifica_foto').submit();
+}
+</script>
+</body>
+</html>
