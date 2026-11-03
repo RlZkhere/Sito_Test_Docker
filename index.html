@@ -35,6 +35,7 @@ list-style: none;
 .menu li {
 display: flex;
 align-items: stretch;
+position: relative;
 }
 .menu li a {
 display: flex;
@@ -51,8 +52,49 @@ transition: background-color 0.18s ease, color 0.18s ease;
 background: #e9edf1;
 color: #397fae;
 }
-.menu li.active a {
+.menu li.active > a {
 background: #e9edf1;
+}
+.dropdown > a {
+cursor: pointer;
+gap: 8px;
+}
+.arrow {
+font-size: 11px;
+transition: transform 0.2s ease;
+}
+.dropdown.open .arrow {
+transform: rotate(180deg);
+}
+.submenu {
+display: none;
+position: absolute;
+top: 100%;
+left: 0;
+min-width: 240px;
+padding: 5px 0;
+margin: 0;
+list-style: none;
+background: #f3f3f3;
+border: 1px solid #d9d9d9;
+box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+z-index: 1000;
+}
+.dropdown.open .submenu {
+display: block;
+}
+.submenu li {
+display: block;
+width: 100%;
+}
+.submenu li a {
+display: block;
+padding: 13px 18px;
+font-size: 16px;
+}
+.submenu li a:hover {
+background: #e9edf1;
+color: #397fae;
 }
 .content {
 max-width: 1400px;
@@ -70,28 +112,56 @@ margin: 0;
 color: #687585;
 font-size: 16px;
 }
-@media (max-width: 800px) {
-.navbar {
-padding: 0 10px;
-}
-.menu li a {
-padding: 0 14px;
-font-size: 15px;
-}
-}
 </style>
 </head>
 <body>
 <nav class="navbar">
 <ul class="menu">
-<li class="active"><a href="resources/recuperi.html">Script Recupero dati</a></li>
-<li><a href="resources/analisi_ecommerce.html">Analisi Magento/Ebay</a></li>
-<li><a href="resources/modifica_foto.html">Modifica foto</a></li>
+<li class="active">
+<a href="resources/recuperi.html">Script Recupero dati</a>
+</li>
+<li>
+<a href="resources/modifica_foto.html">Modifica foto</a>
+</li>
+<li class="dropdown" id="marketplaceDropdown">
+<a href="#" id="dropdownToggle" aria-expanded="false" aria-haspopup="true">Controlli Marketplace/Odoo<span class="arrow">▼</span></a>
+<ul class="submenu">
+<li>
+<a href="resources/analisi_ecommerce.html">Report</a>
+</li>
+<li>
+<a href="resources/controlli_tecnici.html">Controlli tecnici</a>
+</li>
+</ul>
+</li>
 </ul>
 </nav>
 <main class="content">
 <h1>Strumenti Pannello</h1>
 <p>Seleziona una funzione dal menu superiore.</p>
 </main>
+<script>
+const dropdown = document.getElementById("marketplaceDropdown");
+const toggle = document.getElementById("dropdownToggle");
+toggle.addEventListener("click", function(e) {
+e.preventDefault();
+const isOpen = dropdown.classList.toggle("open");
+toggle.setAttribute("aria-expanded", isOpen);
+});
+// Chiude il menu cliccando fuori
+document.addEventListener("click", function(e) {
+if (!dropdown.contains(e.target)) {
+dropdown.classList.remove("open");
+toggle.setAttribute("aria-expanded", "false");
+}
+});
+// Chiude il menu premendo ESC
+document.addEventListener("keydown", function(e) {
+if (e.key === "Escape") {
+dropdown.classList.remove("open");
+toggle.setAttribute("aria-expanded", "false");
+}
+});
+</script>
 </body>
 </html>

@@ -1,8 +1,8 @@
 from configurazione_recupero_mt import *
 base_dir = os.path.dirname(os.path.abspath(__file__))
-file_log = os.path.join(base_dir, '../storage/MT-HELMETS/log.csv')
-file_dati = os.path.join(base_dir, '../storage/MT-HELMETS/dati.csv')
-file_foto = os.path.join(base_dir, '../storage/MT-HELMETS/foto.csv')
+file_log = os.path.join(base_dir, '../storage/MT/log.csv')
+file_dati = os.path.join(base_dir, '../storage/MT/dati.csv')
+file_foto = os.path.join(base_dir, '../storage/MT/foto.csv')
 def scrivi_errore(stringa):
  f=open(file_log,'a')
  f.write(stringa+"\n")
