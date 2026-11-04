@@ -13,7 +13,11 @@ def recupera_dati():
  try:
   sku=browser.find_elements(By.XPATH,"//div[@class='spb_wrapper clearfix']")[1].find_elements(By.TAG_NAME,'h2')[0].get_attribute('innerText').strip().split(' ')[0]
  except Exception:
-  sku=''    
+  sku=''
+ try: #TITOLO
+  titolo=browser.find_elements(By.XPATH,"//div[@class='spb_wrapper clearfix']")[1].find_elements(By.TAG_NAME,'h2')[0].get_attribute('innerText').strip().split(' ')[1] 
+ except Exception:    
+  titolo=''
  try: #BLOCCO FOTO
   numero_foto=len(browser.find_elements(By.XPATH,"//a[@rel='lightbox']"))
   for i in range(numero_foto):
@@ -70,10 +74,9 @@ def recupera_dati():
   traceback.print_exc()     
  if dati_tecnici_uniti.startswith('|'):
   dati_tecnici_uniti=dati_tecnici_uniti[1:]     
- if dati_tecnici_uniti != '' or note != '' or link_pdf != '':
-  f=open(file_anagrafica,'a') 
-  f.write(sku+';'+dati_tecnici_uniti+';'+note+';'+link_pdf+"\n")
-  f.close() 
+ f=open(file_anagrafica,'a') 
+ f.write(sku+';'+titolo+';'+dati_tecnici_uniti+';'+note+';'+link_pdf+"\n")
+ f.close() 
 for codice in listacodici:
  browser.find_element(By.ID,'code_word_search').clear()   
  browser.find_element(By.ID,'code_word_search').send_keys(codice+Keys.ENTER)

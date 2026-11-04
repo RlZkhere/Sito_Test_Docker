@@ -6,15 +6,16 @@ error_reporting(E_ALL);
 $link_stampa = [];
 $query='';
 $lista_link = [];
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['tipo_controllo']) && !empty($_POST['piattaforma'])){
-$scelta_controllo=$_POST['tipo_controllo'] ;
-$scelta_piattaforma=$_POST['piattaforma'];
 require_once '../../db_pwd';
+if ($_SERVER['REQUEST_METHOD'] === 'POST'){
 $connessione = pg_connect("host=$host port=$porta dbname=$db user=$user password=$password"); //SI CONNETTE
 if (!$connessione){
 echo '<h2>ERRORE CONNESSIONE AD ODOO8</h2>';
 exit;	
 }
+if (!empty($_POST['tipo_controllo']) && !empty($_POST['piattaforma'])){
+$scelta_controllo=$_POST['tipo_controllo'] ;
+$scelta_piattaforma=$_POST['piattaforma'];
 if ($scelta_piattaforma === 'listini'){
 require __DIR__ . '/controllo_listini.php';
 }
@@ -57,6 +58,14 @@ foreach ($lista_link as $link){
 $link_stampa [] = '<a href="' . $link . '">' . basename($link) . '</a><br>';
 }
 pg_close($connessione);
+}
+if (!empty($_POST['controllo_db'])){
+$scelta_controllo=$_POST['controllo_db'] ;
+if ($scelta_controllo === 'inc_des'){ //Descrizione in IR translation diversa da quella in product_translations
+require __DIR__ . '/CONTROLLI-DB/' . 'controllo_descrizioni_ir.php';
+}
+pg_close($connessione);
+}
 $_SESSION['link_stampa'] = $link_stampa;
 header('Location: output_analisi.php');
 exit;
