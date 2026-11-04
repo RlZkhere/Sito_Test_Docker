@@ -15,7 +15,7 @@ def recupera_dati():
  except Exception:
   sku=''
  try: #TITOLO
-  titolo=browser.find_elements(By.XPATH,"//div[@class='spb_wrapper clearfix']")[1].find_elements(By.TAG_NAME,'h2')[0].get_attribute('innerText').strip().split(' ')[1] 
+  titolo=browser.find_elements(By.XPATH,"//div[@class='spb_wrapper clearfix']")[1].find_elements(By.TAG_NAME,'h2')[0].get_attribute('innerText').strip() 
  except Exception:    
   titolo=''
  try: #BLOCCO FOTO
