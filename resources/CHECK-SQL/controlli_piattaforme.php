@@ -14,6 +14,7 @@ echo '<h2>ERRORE CONNESSIONE AD ODOO8</h2>';
 exit;	
 }
 if (!empty($_POST['tipo_controllo']) && !empty($_POST['piattaforma'])){
+$pagina_home='/resources/analisi_ecommerce.html';
 $scelta_controllo=$_POST['tipo_controllo'] ;
 $scelta_piattaforma=$_POST['piattaforma'];
 if ($scelta_piattaforma === 'listini'){
@@ -60,13 +61,18 @@ $link_stampa [] = '<a href="' . $link . '">' . basename($link) . '</a><br>';
 pg_close($connessione);
 }
 if (!empty($_POST['controllo_db'])){
+$pagina_home='/resources/controlli_tecnici.html';
 $scelta_controllo=$_POST['controllo_db'] ;
 if ($scelta_controllo === 'inc_des'){ //Descrizione in IR translation diversa da quella in product_translations
 require __DIR__ . '/CONTROLLI-DB/' . 'controllo_descrizioni_ir.php';
 }
+if ($scelta_controllo === 'prod_no_comp'){ //Prodotto online su Magento con titolo corto ma senza compatibilita
+require __DIR__ . '/CONTROLLI-DB/' . 'controllo_prodotti_nocmp.php';
+}
 pg_close($connessione);
 }
 $_SESSION['link_stampa'] = $link_stampa;
+$_SESSION['pagina_home'] = $pagina_home;
 header('Location: output_analisi.php');
 exit;
 }

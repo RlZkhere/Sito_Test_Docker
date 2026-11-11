@@ -1,6 +1,7 @@
 <?php
 session_start();
 $link_stampa = $_SESSION['link_stampa'] ?? [];
+$pagina_home = $_SESSION['pagina_home'] ?? [];
 ?>
 <!DOCTYPE html>
 <html lang="it">
@@ -103,7 +104,7 @@ font-size: 0.95rem;
 <div class="container">
 <div class="header">
 <h1>Elenco Elementi</h1>
-<a href="/resources/analisi_ecommerce.html" class="btn-home">
+<a href="<?= $pagina_home ?>" class="btn-home">
 &larr; Torna indietro
 </a>
 </div>
