@@ -17,20 +17,15 @@ if (!empty($_POST['tipo_controllo']) && !empty($_POST['piattaforma'])){
 $pagina_home='/resources/analisi_ecommerce.html';
 $scelta_controllo=$_POST['tipo_controllo'] ;
 $scelta_piattaforma=$_POST['piattaforma'];
-if ($scelta_piattaforma === 'listini'){
-require __DIR__ . '/controllo_listini.php';
-}
-if ($scelta_piattaforma === 'vendite'){	
-require __DIR__ . '/controllo_vendite.php';
-}
-if ($scelta_piattaforma === 'no_vendite'){
-require __DIR__ . '/controllo_no_vendite.php';
-}
-if ($scelta_piattaforma === 'magento'){
-require __DIR__ . '/controllo_magento.php';
-}
-if ($scelta_piattaforma === 'ebay'){
-require __DIR__ . '/controllo_ebay.php';
+$controlli = [
+'listini'    => 'controllo_listini.php',
+'vendite'    => 'controllo_vendite.php',
+'no_vendite' => 'controllo_no_vendite.php',
+'magento'    => 'controllo_magento.php',
+'ebay'       => 'controllo_ebay.php'
+];
+if (isset($controlli[$scelta_piattaforma])) {
+require __DIR__ . '/' . $controlli[$scelta_piattaforma];
 }
 foreach(($lista_query ?? []) as $nome_query => $query){ //TUTTO QUESTO BLOCCO VALE PER LE QUERY MAGENTO/EBAY DATO CHE SONO MULTIPLE
 $risultato=pg_query($connessione,$query);
@@ -58,19 +53,21 @@ $link_stampa[] = $nome_query.": ".implode(" ; ",$riga)."<br>";
 foreach ($lista_link as $link){
 $link_stampa [] = '<a href="' . $link . '">' . basename($link) . '</a><br>';
 }
-pg_close($connessione);
+//IL BLOCCO DELLE QUERY MULTIPLE TERMINA QUI
 }
-if (!empty($_POST['controllo_db'])){
+elseif (!empty($_POST['controllo_db'])){
 $pagina_home='/resources/controlli_tecnici.html';
 $scelta_controllo=$_POST['controllo_db'] ;
-if ($scelta_controllo === 'inc_des'){ //Descrizione in IR translation diversa da quella in product_translations
-require __DIR__ . '/CONTROLLI-DB/' . 'controllo_descrizioni_ir.php';
+$controlli_db = [
+'inc_des'      => 'controllo_descrizioni_ir.php',
+'prod_no_comp' => 'controllo_prodotti_nocmp.php'
+];
+if (isset($controlli_db[$scelta_controllo])){
+require __DIR__ . '/CONTROLLI-DB/' .
+$controlli_db[$scelta_controllo];	
 }
-if ($scelta_controllo === 'prod_no_comp'){ //Prodotto online su Magento con titolo corto ma senza compatibilita
-require __DIR__ . '/CONTROLLI-DB/' . 'controllo_prodotti_nocmp.php';
 }
 pg_close($connessione);
-}
 $_SESSION['link_stampa'] = $link_stampa;
 $_SESSION['pagina_home'] = $pagina_home;
 header('Location: output_analisi.php');
