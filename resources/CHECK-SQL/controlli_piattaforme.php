@@ -14,7 +14,7 @@ echo '<h2>ERRORE CONNESSIONE AD ODOO8</h2>';
 exit;	
 }
 if (!empty($_POST['tipo_controllo']) && !empty($_POST['piattaforma'])){
-$pagina_home='/resources/analisi_ecommerce.html';
+$pagina_home='/resources/HTML/analisi_ecommerce.html';
 $scelta_controllo=$_POST['tipo_controllo'] ;
 $scelta_piattaforma=$_POST['piattaforma'];
 $controlli = [
@@ -56,7 +56,7 @@ $link_stampa [] = '<a href="' . $link . '">' . basename($link) . '</a><br>';
 //IL BLOCCO DELLE QUERY MULTIPLE TERMINA QUI
 }
 elseif (!empty($_POST['controllo_db'])){
-$pagina_home='/resources/controlli_tecnici.html';
+$pagina_home='/resources/HTML/controlli_tecnici.html';
 $scelta_controllo=$_POST['controllo_db'] ;
 $controlli_db = [
 'inc_des'      => 'controllo_descrizioni_ir.php',

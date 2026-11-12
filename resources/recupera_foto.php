@@ -23,15 +23,15 @@ if (move_uploaded_file($file_temporaneo, $destinazione)) {
 }
 if ($scelta_utente === 'duplica_foto'){
 $risultato=shell_exec("gimp -i --new-instance -b '(python-fu-batch-sdoppia-foto RUN-NONINTERACTIVE)' -b '(gimp-quit 0)'");
-readfile('risultato_foto.html');
+readfile('HTML/risultato_foto.html');
 }
 if ($scelta_utente === 'taglio_contenuto') {	
 $risultato=shell_exec("gimp -i --new-instance -b '(python-fu-batch-taglia-soggetto RUN-NONINTERACTIVE)' -b '(gimp-quit 0)'");
-readfile('risultato_foto.html');
+readfile('HTML/risultato_foto.html');
 }
 if ($scelta_utente === 'ridimensiona'){
 $risultato=shell_exec("gimp -i --new-instance -b '(python-fu-batch-scala-foto RUN-NONINTERACTIVE)' -b '(gimp-quit 0)'");
-readfile('risultato_foto.html');	
+readfile('HTML/risultato_foto.html');	
 }
 }
 ?>

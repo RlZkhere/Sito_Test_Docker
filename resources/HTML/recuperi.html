@@ -39,13 +39,13 @@ font-color: black;
 </head>
 <body>
 <button type="submit" value="Submit" class='pulsante-home'>
-<a class='testo-pulsante-home' href='../../index.html'>Torna alla Home</a>
+<a class='testo-pulsante-home' href='../../../index.html'>Torna alla Home</a>
 </button>
 <div class='bottone-nascosto'>
-<button onclick='window.open("../resources/foto-bottone.jpg")'></button>
+<button onclick='window.open("../../resources/foto-bottone.jpg")'></button>
 </div>
 <h2>Esegui script senza listasku</h2>
-<form id="lancia_script_no_sku" action="/resources/esegui_script.php" method="POST">
+<form id="lancia_script_no_sku" action="../../resources/esegui_script.php" method="POST">
 <label for="nome_script_no_sku">Seleziona Script</label>
 <select id="nome_script_no_sku" name="nome_script_no_sku">
 <option value="mt">MT HELMETS</option>
@@ -53,7 +53,7 @@ font-color: black;
 <input type="submit" value="Conferma">
 </form>
 <h2>Esegui script con listasku</h2>
-<form id="lancia_script" action="/resources/esegui_script.php" method="POST" onsubmit="return apri_finestra_sku(event);">
+<form id="lancia_script" action="../../resources/esegui_script.php" method="POST" onsubmit="return apri_finestra_sku(event);">
 <label for="nome_script">Seleziona Script</label>
 <select id="nome_script" name="nome_script">
 <option value="arrow">ARROW</option>
@@ -68,7 +68,7 @@ font-color: black;
 <input type="submit" value="Conferma">
 </form>
 <h2>Scarica file output recuperi</h2>
-<form id="recupera_file" action = "/resources/recupera_file_script.php" method="POST">
+<form id="recupera_file" action = "../../resources/recupera_file_script.php" method="POST">
 <label for="nome_file">Seleziona il fornitore di cui scaricare l ultimo recupero</label>
 <select id="nome_file" name="nome_file">
 <option value="arrow">ARROW</option>
