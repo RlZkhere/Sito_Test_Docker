@@ -33,5 +33,9 @@ if ($scelta_utente === 'ridimensiona'){
 $risultato=shell_exec("gimp -i --new-instance -b '(python-fu-batch-scala-foto RUN-NONINTERACTIVE)' -b '(gimp-quit 0)'");
 readfile('HTML/risultato_foto.html');	
 }
+if ($scelta_utente === 'foto_kit'){
+$risultato=shell_exec("gimp -i --new-instance -b '(python-fu-unisci-foto-kit RUN-NONINTERACTIVE)' -b '(gimp-quit 0)'");
+readfile('HTML/risultato_foto.html');	
+}
 }
 ?>

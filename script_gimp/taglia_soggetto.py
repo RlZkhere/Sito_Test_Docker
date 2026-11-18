@@ -3,6 +3,11 @@
 from gimpfu import *
 import os
 import zipfile
+def dimensioni(x,y):
+ if x >= y:
+  return x
+ else:
+  return y   
 def taglia_contenuto():
  lista_file=[]
  percorso='/var/www/html/storage/MODIFICA-FOTO/'
@@ -12,6 +17,12 @@ def taglia_contenuto():
    immagine=pdb.gimp_file_load(percorso_file,percorso_file)
    livello=pdb.gimp_image_get_active_layer(immagine)
    pdb.plug_in_autocrop(immagine, livello)
+   larghezza=immagine.width
+   altezza=immagine.height
+   lato_lungo=dimensioni(larghezza,altezza)
+   if lato_lungo < 1100:
+    rapporto=1100.0/lato_lungo
+    pdb.gimp_image_scale(immagine,int(larghezza*rapporto),int(altezza*rapporto))
    livello=pdb.gimp_image_get_active_layer(immagine)
    pdb.file_png_save_defaults(immagine,livello,percorso_file,percorso_file)
    pdb.gimp_image_delete(immagine)
