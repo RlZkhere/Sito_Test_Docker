@@ -4,6 +4,15 @@ from gimpfu import *
 import os
 import zipfile
 lista_file=[]
+def salva_foto(percorso):
+ file_zip=[]
+ percorso_zip = percorso + "foto_nuove.zip"
+ for y in os.listdir(percorso):
+  if y != "foto_nuove.zip":
+   file_zip.append(y)
+ with zipfile.ZipFile(percorso_zip, "w", zipfile.ZIP_DEFLATED) as zfile:
+  for x in file_zip:   
+   zfile.write(percorso + x, arcname=os.path.basename(x))
 def setta_posizioni(x,y,z):
  pdb.gimp_image_add_layer(x,y,-1)
  pdb.gimp_image_add_layer(x,z,-1)
@@ -49,13 +58,7 @@ def unisci_foto():
    lista_foto.append(percorso+file)
  if len(lista_foto) == 2:
   due_foto(lista_foto)
- percorso_zip = percorso + "foto_nuove.zip"
- for y in os.listdir(percorso):
-  if y != "foto_nuove.zip":
-   file_zip.append(y)
- with zipfile.ZipFile(percorso_zip, "w", zipfile.ZIP_DEFLATED) as zfile:
-  for x in file_zip:   
-   zfile.write(percorso + x, arcname=os.path.basename(x))   
+  salva_foto(percorso)  
 register(
 "python-fu-unisci-foto-kit",
 "Unisci foto",

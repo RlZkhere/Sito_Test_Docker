@@ -37,5 +37,9 @@ if ($scelta_utente === 'foto_kit'){
 $risultato=shell_exec("gimp -i --new-instance -b '(python-fu-unisci-foto-kit RUN-NONINTERACTIVE)' -b '(gimp-quit 0)'");
 readfile('HTML/risultato_foto.html');	
 }
+if ($scelta_utente === 'controllo_bordi'){
+$risultato=shell_exec("gimp -i --new-instance -b '(python-fu-controlla-bordo RUN-NONINTERACTIVE)' -b '(gimp-quit 0)'");
+readfile('HTML/risultato_foto.html');
+}
 }
 ?>

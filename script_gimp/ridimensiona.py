@@ -3,6 +3,14 @@
 from gimpfu import *
 import os
 import zipfile
+percorso='/var/www/html/storage/MODIFICA-FOTO/'
+def salva_foto(lista_foto):
+ with zipfile.ZipFile(percorso+"foto_nuove.zip","w") as zfile:
+  for x in lista_foto:
+   try:
+    zfile.write(x,arcname=os.path.basename(x))
+   except Exception:
+    continue   
 def maggiore(x,y):
  if x >= y:
   return x
@@ -22,8 +30,7 @@ def crea_foto_finale(immagine,dimensioni):
  pdb.gimp_image_merge_visible_layers(immagine,CLIP_TO_IMAGE)
  return immagine
 def scala_foto():
- lista_file=[]
- percorso='/var/www/html/storage/MODIFICA-FOTO/'
+ lista_file=[] 
  for file in os.listdir(percorso): 
   try:
    percorso_file=percorso+file
@@ -60,12 +67,7 @@ def scala_foto():
    lista_file.append(percorso_file)
   except Exception:
    continue   
- with zipfile.ZipFile(percorso+"foto_nuove.zip","w") as zfile:
-  for x in lista_file:
-   try:
-    zfile.write(x,arcname=os.path.basename(x))
-   except Exception:
-    continue
+ salva_foto(lista_file)
 register(
     "python-fu-batch-scala-foto",
     "Scala la foto",

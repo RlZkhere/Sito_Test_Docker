@@ -4,9 +4,16 @@ from gimpfu import *
 import os
 import zipfile
 lista_file=[]
+percorso_cartella='/var/www/html/storage/MODIFICA-FOTO'
+def salva_foto(lista_immagini):
+ with zipfile.ZipFile(percorso_cartella+"/foto_nuove.zip","w") as zfile:
+  for x in lista_immagini:
+   try:
+    zfile.write(x,arcname=os.path.basename(x))
+   except Exception:
+    continue    
 def foto_specchiata():
- for file in os.listdir('/var/www/html/storage/MODIFICA-FOTO/'):
-  percorso_cartella='/var/www/html/storage/MODIFICA-FOTO'
+ for file in os.listdir('/var/www/html/storage/MODIFICA-FOTO/'): 
   try:
    if '_1' in file: 
     percorso_file=percorso_cartella+'/'+file
@@ -71,12 +78,7 @@ def foto_specchiata():
     pdb.gimp_image_delete(immagine_n_2)
   except Exception:
    continue   
- with zipfile.ZipFile(percorso_cartella+"/foto_nuove.zip","w") as zfile:
-  for x in lista_file:
-   try:
-    zfile.write(x,arcname=os.path.basename(x))
-   except Exception:
-    continue   
+ salva_foto(lista_file) 
 register(
     "python-fu-batch-sdoppia-foto",
     "Duplica e specchia foto",

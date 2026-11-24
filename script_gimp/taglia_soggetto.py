@@ -3,14 +3,21 @@
 from gimpfu import *
 import os
 import zipfile
+percorso='/var/www/html/storage/MODIFICA-FOTO/'
+def salva_foto(lista_foto):
+ with zipfile.ZipFile(percorso+"foto_nuove.zip","w") as zfile:
+  for x in lista_foto:
+   try:
+    zfile.write(x,arcname=os.path.basename(x))
+   except Exception:
+    continue   
 def dimensioni(x,y):
  if x >= y:
   return x
  else:
   return y   
 def taglia_contenuto():
- lista_file=[]
- percorso='/var/www/html/storage/MODIFICA-FOTO/'
+ lista_file=[] 
  for file in os.listdir(percorso): 
   try:
    percorso_file=percorso+file
@@ -28,13 +35,8 @@ def taglia_contenuto():
    pdb.gimp_image_delete(immagine)
    lista_file.append(percorso_file)
   except Exception:
-   continue   
- with zipfile.ZipFile(percorso+"foto_nuove.zip","w") as zfile:
-  for x in lista_file:
-   try:
-    zfile.write(x,arcname=os.path.basename(x))
-   except Exception:
-    continue
+   continue 
+ salva_foto(lista_file)  
 register(
     "python-fu-batch-taglia-soggetto",
     "Taglia la foto al soggetto",
