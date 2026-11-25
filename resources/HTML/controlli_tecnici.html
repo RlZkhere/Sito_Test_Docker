@@ -1,4 +1,11 @@
 <html>
+<head>
+<style>
+.modelli {
+visibility: hidden;
+}
+</style>
+</head>
 <button type="submit" value="Submit" class='pulsante-home'>
 <a class='testo-pulsante-home' href='../../index.html'>Torna alla Home</a>
 </button>
@@ -7,8 +14,24 @@
 <label for="controllo_db">Tipo di controllo</label>
 <select id="controllo_db" name="controllo_db">
 <option value="inc_des">Incongruenza descrizioni Magento/Ebay</option>
+<option value="cmp_obs">Compatibilita obsolete su Ebay</option>
 <option value="prod_no_comp">Prodotti online senza compatibilita</option>
 </select>
 <button type="submit">Conferma</button>
+<div class="modelli">
+<p>Inserisci l ID dei modelli separati dalla virgola</p>
+<input name="lista_modelli" id="lista_modelli">
+</div>
 </form>
+<script>
+document.getElementById('controllo_db').addEventListener('change', function() {
+const modelli = document.querySelector('.modelli');
+if (this.value === 'cmp_obs') {
+modelli.style.visibility = 'visible';
+}
+else {
+modelli.style.visibility = 'hidden';	
+}
+});
+</script>
 </html>

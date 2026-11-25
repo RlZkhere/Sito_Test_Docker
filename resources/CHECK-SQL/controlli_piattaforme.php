@@ -60,7 +60,8 @@ $pagina_home='/resources/HTML/controlli_tecnici.html';
 $scelta_controllo=$_POST['controllo_db'] ;
 $controlli_db = [
 'inc_des'      => 'controllo_descrizioni_ir.php',
-'prod_no_comp' => 'controllo_prodotti_nocmp.php'
+'prod_no_comp' => 'controllo_prodotti_nocmp.php',
+'cmp_obs' => 'controllo_cmp_obsolete.php'
 ];
 if (isset($controlli_db[$scelta_controllo])){
 require __DIR__ . '/CONTROLLI-DB/' .
